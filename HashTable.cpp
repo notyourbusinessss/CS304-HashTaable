@@ -35,7 +35,9 @@ private:
  
 public: 
     // Constructor 
-    HashTable(size_t initialCapacity = 101); 
+    HashTable(size_t initialCapacity = 101){
+        
+    } 
  
     // Big Five 
     ~HashTable();                                       // Destructor 
