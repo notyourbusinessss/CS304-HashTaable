@@ -7,8 +7,10 @@ HashTable's Array :\
 ```
 Initially of course there is no value, but if we were to add, for exampl, 2 it would get placed at position 2.
 ```
-|   null   |   null   |   2   |   null   |   null   |   null   |   null   |
+|   null   |   null   |    2     |   null   |   null   |   null   |   null   |
 ```
+so if i wanted to then find the if the table has the value 2 in it i could do HashTable.Has(2); instead of looking through the entire array one by one and comparing wach value, it simply takes the value of "2" and checks at that position.\
+Although very simplified this is the gist of it.
 
 
 ## How does it work
