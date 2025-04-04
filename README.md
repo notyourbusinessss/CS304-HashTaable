@@ -14,3 +14,5 @@ Although very simplified this is the gist of it.
 
 
 ## How does it work
+
+In this code we have a private class called "Entry"
