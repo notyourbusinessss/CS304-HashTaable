@@ -191,7 +191,7 @@ Tests should cover:
 ## How to Compile
 
 ```sh
-g++ -std=c++11 main.cpp -o hashtable
+g++ -std=c++11 HashTable.cpp -o hashtable
 ./hashtable
 ```
 
