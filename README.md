@@ -197,6 +197,3 @@ g++ -std=c++11 HashTable.cpp -o hashtable
 
 ---
 
-## License
-
-For educational use only.
