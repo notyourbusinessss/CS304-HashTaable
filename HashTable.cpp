@@ -1,5 +1,6 @@
 #include <cstddef>
 #include <iostream> 
+#include <ostream>
 #include <string> 
 #include <stdexcept> 
 #include <vector> 
@@ -13,8 +14,9 @@ class HashTable{
                 T value; 
                 bool isOccupied; 
                 bool isDeleted; 
-        
-                Entry() : key(""), value(), isOccupied(false), isDeleted(false) {} 
+                
+                Entry() : key(""), value(), isOccupied(false), isDeleted(false) {}
+                 
             };
     
         Entry* table; 
@@ -107,7 +109,7 @@ class HashTable{
         } 
         HashTable& operator=(HashTable&& other) noexcept   // Move assignment 
         {
-            
+
         }
         // Core methods 
         void insert(const std::string& key, const T& value){
@@ -127,7 +129,6 @@ class HashTable{
             size_t index = probe(key);
             if(index == -1){
                 throw std::range_error("key not found");
-                return;
             }
             return table[index].value;
         } 
@@ -136,7 +137,7 @@ class HashTable{
         void remove(const std::string& key){
             size_t index = probe(key);
             if(contains(key)){
-                table[index].key = NULL;
+                table[index].key = "";
                 table[index].value = NULL;
                 table[index].isDeleted = true;
                 table[index].isOccupied = false;
@@ -157,12 +158,38 @@ class HashTable{
         } 
         size_t getCapacity() const { 
             return capacity; 
-        } 
-
+        }
+        template <typename U>
+        friend std::ostream& operator<<(std::ostream&,const HashTable<U>&);
         
-
-};
-
-int main(){
+        
+    };
     
+    template <typename T>
+    std::ostream& operator<<(std::ostream& os, const HashTable<T>& given) {
+        for (size_t i = 0; i < given.capacity; ++i) {
+            auto& entry = given.table[i];
+            os << i << " -> ";
+            if (entry.isOccupied && !entry.isDeleted) {
+                os << "Key: " << entry.key << ", Value: " << entry.value;
+            } else if (entry.isDeleted) {
+                os << "[deleted]";
+            } else {
+                os << "[empty]";
+            }
+            os << "\n";
+        }
+        return os;
+    }
+    
+int main(){
+    HashTable<int> test;
+    test.insert("a", 10);
+    test.insert("b", 10);
+    test.insert("c", 10);
+    test.insert("d", 15);
+    test.insert("e", 11);
+    test.remove("c");
+    std::cout << test;
+    std::cout << "test";
 }
