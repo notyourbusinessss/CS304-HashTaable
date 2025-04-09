@@ -29,7 +29,14 @@ class HashTable{
             return hash; 
         } 
     
-        size_t probe(const std::string& key, bool forInsert = false) const; 
+        size_t probe(const std::string& key, bool forInsert = false) const{
+            size_t hash = customHash(key)%capacity;
+            int i = 0;
+            int index;
+            while(true){
+                index = (hash + i*i) % capacity;
+            }
+        } 
     
         void resize(){
             size_t old = capacity;
@@ -47,6 +54,7 @@ class HashTable{
             table = new Entry[initialCapacity];
             capacity = initialCapacity;
             size = 0;
+            loadFactorThreshold = 0.7;
         } 
         
         // Big Five 
@@ -57,6 +65,8 @@ class HashTable{
         {
             capacity = other.capacity;
             size = other.size;
+            loadFactorThreshold = other.loadFactorThreshold;
+
             table = new Entry[other.capacity];
             for(int i = 0 ; i < capacity ; ++i){
                 table[i] = other.table[i];
@@ -68,9 +78,26 @@ class HashTable{
         HashTable& operator=(HashTable&& other) noexcept;   // Move assignment 
     
         // Core methods 
-        void insert(const std::string& key, const T& value); 
+        void insert(const std::string& key, const T& value){
+            if(size/capacity >= loadFactorThreshold){
+                resize();
+            }
+
+            size_t index = probe(key,true);
+
+            table[index].key = key;
+            table[index].value = value;
+            table[index].isOccupied = true;
+            table[index].isDeleted = false;
+
+        } 
         T& get(const std::string& key); 
-        void remove(const std::string& key); 
+        void remove(const std::string& key){
+            size_t index = probe(key);
+
+            table[index].isDeleted = true;
+            table[index].isOccupied = false;
+        } 
         bool contains(const std::string& key) const; 
     
         size_t getSize() const { 
