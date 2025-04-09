@@ -1,11 +1,11 @@
-#pragma once 
 #include <iostream> 
 #include <string> 
 #include <stdexcept> 
 #include <vector> 
- 
+
+
 template <typename T> 
-class HashTable { 
+class HashTable{ 
     private: 
             struct Entry { 
                 std::string key; 
@@ -14,7 +14,7 @@ class HashTable {
                 bool isDeleted; 
         
                 Entry() : key(""), value(), isOccupied(false), isDeleted(false) {} 
-            }; 
+            };
     
         Entry* table; 
         size_t capacity; 
@@ -22,7 +22,7 @@ class HashTable {
         double loadFactorThreshold; 
     
         size_t customHash(const std::string& key) const { 
-            size_t hash = 5381; 
+            size_t hash = 5381; //
             for (char c : key) { 
                 hash = ((hash << 5) + hash) + c; 
             } 
@@ -35,7 +35,7 @@ class HashTable {
             size_t old = capacity;
             capacity *= 2;
             Entry* oldtable = table;
-            table = new Entry[]
+            table = new Entry[old];
             for(int i = 0 ; i < old ; ++i){
                 table[i] = oldtable[i];
             }
@@ -44,7 +44,7 @@ class HashTable {
     public: 
         // Constructor 
         HashTable(size_t initialCapacity = 101){
-            Entry* = new Entry[initialCapacity];
+            table = new Entry[initialCapacity];
             capacity = initialCapacity;
             size = 0;
         } 
@@ -79,4 +79,5 @@ class HashTable {
         size_t getCapacity() const { 
             return capacity; 
         } 
-}; 
+};
+

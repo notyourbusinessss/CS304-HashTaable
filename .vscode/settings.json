@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "stdexcept": "cpp"
-    }
+        "stdexcept": "cpp",
+        "xstring": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "enabledIfIncludesResolve",
+    "C_Cpp.default.compilerPath": "C:/msys64/ucrt64/bin/gcc.exe"
 }
