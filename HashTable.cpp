@@ -49,6 +49,8 @@ class HashTable{
                     }
                 }
             }
+
+            return -1;
         } 
     
         void resize(){
@@ -92,7 +94,7 @@ class HashTable{
     
         // Core methods 
         void insert(const std::string& key, const T& value){
-            if(size/capacity >= loadFactorThreshold){
+            if((double)size/capacity >= loadFactorThreshold){
                 resize();
             }
 
@@ -106,18 +108,31 @@ class HashTable{
         } 
         T& get(const std::string& key){
             size_t index = probe(key);
+            if(index == -1){
+                throw std::range_error("key not found");
+            }
             return table[index].value;
         } 
 
 
         void remove(const std::string& key){
             size_t index = probe(key);
-            table[index].key = NULL;
-            table[index].value = NULL;
-            table[index].isDeleted = true;
-            table[index].isOccupied = false;
+            if(contains(key)){
+                table[index].key = NULL;
+                table[index].value = NULL;
+                table[index].isDeleted = true;
+                table[index].isOccupied = false;
+            }
         } 
-        bool contains(const std::string& key) const; 
+        bool contains(const std::string& key) const{
+            size_t index = probe(key);
+            if(index == -1){
+                return false;
+            }else{
+                return true;
+            }
+
+        } 
     
         size_t getSize() const { 
             return size; 
