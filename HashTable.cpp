@@ -88,10 +88,27 @@ class HashTable{
             }
             
         } 
-        HashTable& operator=(const HashTable& other);       // Copy assignment 
-        HashTable(HashTable&& other) noexcept;              // Move constructor 
-        HashTable& operator=(HashTable&& other) noexcept;   // Move assignment 
-    
+        HashTable& operator=(const HashTable& other)       // Copy assignment 
+        {
+            if(this != other){
+                capacity = other.capacity;
+                size = other.size;
+                loadFactorThreshold = other.loadFactorThreshold;
+
+                table = new Entry[other.capacity];
+                for(int i = 0 ; i < capacity ; ++i){
+                    table[i] = other.table[i];
+                }
+            }
+        }
+        HashTable(HashTable&& other) noexcept              // Move constructor
+        {
+
+        } 
+        HashTable& operator=(HashTable&& other) noexcept   // Move assignment 
+        {
+            
+        }
         // Core methods 
         void insert(const std::string& key, const T& value){
             if((double)size/capacity >= loadFactorThreshold){
@@ -110,6 +127,7 @@ class HashTable{
             size_t index = probe(key);
             if(index == -1){
                 throw std::range_error("key not found");
+                return;
             }
             return table[index].value;
         } 
@@ -140,6 +158,9 @@ class HashTable{
         size_t getCapacity() const { 
             return capacity; 
         } 
+
+        
+
 };
 
 int main(){
