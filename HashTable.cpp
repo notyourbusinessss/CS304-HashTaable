@@ -31,7 +31,15 @@ class HashTable {
     
         size_t probe(const std::string& key, bool forInsert = false) const; 
     
-        void resize(); 
+        void resize(){
+            size_t old = capacity;
+            capacity *= 2;
+            Entry* oldtable = table;
+            table = new Entry[]
+            for(int i = 0 ; i < oldcapacity ; ++i){
+                table[i] = oldtable[i];
+            }
+        }
     
     public: 
         // Constructor 
@@ -42,7 +50,9 @@ class HashTable {
         } 
     
         // Big Five 
-        ~HashTable();                                       // Destructor 
+        ~HashTable(){                   // Destructor 
+            delete[] table;
+        }                                       
         HashTable(const HashTable& other);                  // Copy constructor 
         HashTable& operator=(const HashTable& other);       // Copy assignment 
         HashTable(HashTable&& other) noexcept;              // Move constructor 
@@ -54,6 +64,10 @@ class HashTable {
         void remove(const std::string& key); 
         bool contains(const std::string& key) const; 
     
-        size_t getSize() const { return size; } 
-        size_t getCapacity() const { return capacity; } 
+        size_t getSize() const { 
+            return size; 
+        } 
+        size_t getCapacity() const { 
+            return capacity; 
+        } 
 }; 
