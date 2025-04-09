@@ -48,12 +48,21 @@ class HashTable {
             capacity = initialCapacity;
             size = 0;
         } 
-    
+        
         // Big Five 
         ~HashTable(){                   // Destructor 
             delete[] table;
         }                                       
-        HashTable(const HashTable& other);                  // Copy constructor 
+        HashTable(const HashTable& other)// Copy constructor
+        {
+            capacity = other.capacity;
+            size = other.size;
+            table = new Entry[other.capacity];
+            for(int i = 0 ; i < capacity ; ++i){
+                table[i] = other.table[i];
+            }
+            
+        } 
         HashTable& operator=(const HashTable& other);       // Copy assignment 
         HashTable(HashTable&& other) noexcept;              // Move constructor 
         HashTable& operator=(HashTable&& other) noexcept;   // Move assignment 
