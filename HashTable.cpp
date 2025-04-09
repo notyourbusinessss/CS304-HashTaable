@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <iostream> 
 #include <string> 
 #include <stdexcept> 
@@ -31,10 +32,22 @@ class HashTable{
     
         size_t probe(const std::string& key, bool forInsert = false) const{
             size_t hash = customHash(key)%capacity;
-            int i = 0;
-            int index;
+            size_t i = 0;
+            size_t index;
             while(true){
                 index = (hash + i*i) % capacity;
+                if(forInsert){
+                    if(!table[index].isOccupied){
+                        return index;
+                    }
+                }else{
+                    if(table[index].isOccupied && table[index].key == key){
+                        return index;
+                    }
+                    if(!table[index].isDeleted && !table[index].isOccupied){
+                        break;
+                    }
+                }
             }
         } 
     
@@ -91,10 +104,16 @@ class HashTable{
             table[index].isDeleted = false;
 
         } 
-        T& get(const std::string& key); 
+        T& get(const std::string& key){
+            size_t index = probe(key);
+            return table[index].value;
+        } 
+
+
         void remove(const std::string& key){
             size_t index = probe(key);
-
+            table[index].key = NULL;
+            table[index].value = NULL;
             table[index].isDeleted = true;
             table[index].isOccupied = false;
         } 
