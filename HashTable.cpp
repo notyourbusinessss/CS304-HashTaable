@@ -36,7 +36,7 @@ class HashTable {
             capacity *= 2;
             Entry* oldtable = table;
             table = new Entry[]
-            for(int i = 0 ; i < oldcapacity ; ++i){
+            for(int i = 0 ; i < old ; ++i){
                 table[i] = oldtable[i];
             }
         }
