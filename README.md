@@ -181,19 +181,9 @@ Tests should cover:
 - Load factor and resizing
 - Custom data types
 
-### Applications
 
-**Two Sum**: Uses `HashTable<int>` to map value → index.  
-**Group Anagrams**: Uses `HashTable<std::vector<std::string>>` with sorted word as key.
 
----
+## What is size_t
 
-## How to Compile
-
-```sh
-g++ -std=c++11 HashTable.cpp -o hashtable
-./hashtable
-```
-
----
+Alright... so 
 
