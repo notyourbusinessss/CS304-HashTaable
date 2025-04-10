@@ -120,8 +120,9 @@ class HashTable{
         } 
         HashTable& operator=(HashTable&& other) noexcept   // Move assignment 
         {
-            HashTable toGive;
             if(this != &other){
+                delete[] table;
+
                 table = other.table; 
                 capacity = other.capacity; 
                 size = other.size; 
@@ -229,9 +230,9 @@ int main(){
     test = std::move(test2);
 
     std::cout << "---------------------------" << std::endl;
-    std::cout << test;
+    std::cout << test; // should print the table
     std::cout << "---------------------------" << std::endl;
-    std::cout << test2;
+    std::cout << test2; // should print nothing
     std::cout << "---------------------------" << std::endl;
     std::cout << "test";
 }
