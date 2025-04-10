@@ -1,9 +1,10 @@
 #include <cstddef>
+#include <iomanip>
+#include <ios>
 #include <iostream> 
 #include <ostream>
 #include <string> 
 #include <stdexcept> 
-#include <vector> 
 
 
 template <typename T> 
@@ -50,6 +51,7 @@ class HashTable{
                         break;
                     }
                 }
+                i +=1;
             }
 
             return -1;
@@ -105,11 +107,21 @@ class HashTable{
         }
         HashTable(HashTable&& other) noexcept              // Move constructor
         {
+            table = other.table; 
+            capacity = other.capacity; 
+            size = other.size; 
+            loadFactorThreshold = other.loadFactorThreshold;
+            
+            other.table = nullptr;
+            other.capacity = NULL;
+            other.size = NULL;
 
         } 
         HashTable& operator=(HashTable&& other) noexcept   // Move assignment 
         {
+            if(this != &other){
 
+            }
         }
         // Core methods 
         void insert(const std::string& key, const T& value){
@@ -138,7 +150,7 @@ class HashTable{
             size_t index = probe(key);
             if(contains(key)){
                 table[index].key = "";
-                table[index].value = NULL;
+                //table[index].value = NULL;
                 table[index].isDeleted = true;
                 table[index].isOccupied = false;
             }
@@ -169,7 +181,7 @@ class HashTable{
     std::ostream& operator<<(std::ostream& os, const HashTable<T>& given) {
         for (size_t i = 0; i < given.capacity; ++i) {
             auto& entry = given.table[i];
-            os << i << " -> ";
+            os << std::setw(3) << std::left <<i << " -> ";
             if (entry.isOccupied && !entry.isDeleted) {
                 os << "Key: " << entry.key << ", Value: " << entry.value;
             } else if (entry.isDeleted) {
@@ -188,6 +200,16 @@ int main(){
     test.insert("b", 10);
     test.insert("c", 10);
     test.insert("d", 15);
+    //let's see the quadratic thingy thing
+    test.insert("e", 11);
+    test.insert("e", 11);
+    test.insert("e", 11);
+    test.insert("e", 11);
+    test.insert("e", 11);
+    test.insert("e", 11);
+    test.insert("e", 11);
+    test.insert("e", 11);
+    test.insert("e", 11);
     test.insert("e", 11);
     test.remove("c");
     std::cout << test;
