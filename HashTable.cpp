@@ -5,6 +5,7 @@
 #include <ostream>
 #include <string> 
 #include <stdexcept> 
+#include <utility>
 
 
 template <typename T> 
@@ -113,15 +114,24 @@ class HashTable{
             loadFactorThreshold = other.loadFactorThreshold;
             
             other.table = nullptr;
-            other.capacity = NULL;
-            other.size = NULL;
+            other.capacity = 0;
+            other.size = 0;
 
         } 
         HashTable& operator=(HashTable&& other) noexcept   // Move assignment 
         {
+            HashTable toGive;
             if(this != &other){
-
+                table = other.table; 
+                capacity = other.capacity; 
+                size = other.size; 
+                loadFactorThreshold = other.loadFactorThreshold;
+                
+                other.table = nullptr;
+                other.capacity = 0;
+                other.size = 0;
             }
+            return *this;
         }
         // Core methods 
         void insert(const std::string& key, const T& value){
@@ -212,6 +222,16 @@ int main(){
     test.insert("e", 11);
     test.insert("e", 11);
     test.remove("c");
+
+    //this should initially move it into test2 first and then 
+    HashTable<int> test2 = std::move(test);
+    // into test
+    test = std::move(test2);
+
+    std::cout << "---------------------------" << std::endl;
     std::cout << test;
+    std::cout << "---------------------------" << std::endl;
+    std::cout << test2;
+    std::cout << "---------------------------" << std::endl;
     std::cout << "test";
 }
